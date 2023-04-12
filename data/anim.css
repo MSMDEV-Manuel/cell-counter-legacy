@@ -1,0 +1,19 @@
+@keyframes Start{
+  from{
+    transform: scale(0);
+  }
+  50%{
+    transform: scale(0);
+  }
+  to{}
+}
+
+@keyframes StartCont{
+  from{
+  	opacity: 0;
+  }
+  50%{
+    opacity: 0;
+  }
+  to{}
+}

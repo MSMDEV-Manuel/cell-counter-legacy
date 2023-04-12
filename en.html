@@ -1,0 +1,250 @@
+<html lang="en">
+
+<head>
+	<title>Cell Counter Android version</title>
+	<meta author="Manuel Serrano Martínez (MSM-DEV)">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<script src="data/script.js"></script>
+	<link href="data/style.css" rel="stylesheet" type="text/css" />
+	<link href="data/anim.css" rel="stylesheet" type="text/css" />
+
+	<script>
+		function disableselect(e) {
+			return false
+		}
+		function reEnable() {
+			return true
+		}
+		document.onselectstart = new Function("return false")
+		document.oncontextmenu = new Function("return false")
+		if (window.sidebar) {
+			document.onmousedown = disableselect
+			document.onclick = reEnable
+		}
+	</script>
+
+</head>
+
+<body onload="loadSetts(); setSize()" onKeyDown="tecla(event)">
+
+	<section class="splash" id="splash">
+		<center><img src="data/res/icon.svg" class="icsplash" id="icsplash"></center>
+		<p class="txsplash" id="txsplash">Cell Counter</p>
+		<button class="bt" id="btsplash" onclick="startCounter()">Start</button>
+	</section>
+
+	<section class="cont" id="cont">
+		<div class="header" id="header">
+			<p class="titleapp" id="titleapp">Cell <b>Counter</b></p>
+			<p class="icback" id="icback" onclick="goHome()"></p>
+			<p class="icmenu" id="icmenu" onclick="openMenu()"></p>
+		</div>
+		<div class="header2" id="header2">
+			<span class="total" id="total" onclick="calc()">0</span>
+			<button class="bt" id="bt2" onclick="reset()"> Reset</button>
+		</div>
+
+		<div class="act" id="act">
+			<p class="title" id="ttt-help">Key assignment</p>
+			<div class="boxes" id="boxes">
+				<div class="box" id="box7" onclick="touchSum7()" oncontextmenu="touchRes7()">
+					<p class="namecell" id="nc7">Basophil</p>
+					<img src="data/res/basofilo.svg" class="imcell">
+					<p class="nn" id="nn7">0</p>
+				</div>
+				<div class="box" id="box8" onclick="touchSum8()" oncontextmenu="touchRes8()">
+					<p class="namecell" id="nc8">Eosinophil</p>
+					<img src="data/res/eosinofilo.svg" class="imcell">
+					<p class="nn" id="nn8">0</p>
+				</div>
+				<div class="box" id="box9" onclick="touchSum9()" oncontextmenu="touchRes9()">
+					<p class="namecell" id="nc9">Banded</p>
+					<img src="data/res/banda.svg" class="imcell">
+					<p class="nn" id="nn9">0</p>
+				</div>
+	
+				<div class="box" id="box4" onclick="touchSum4()" oncontextmenu="touchRes4()">
+					<p class="namecell" id="nc4">Segmented</p>
+					<img src="data/res/segmentado.svg" class="imcell">
+					<p class="nn" id="nn4">0</p>
+				</div>
+				<div class="box" id="box5" onclick="touchSum5()" oncontextmenu="touchRes5()">
+					<p class="namecell" id="nc5">Lymphocyte</p>
+					<img src="data/res/linfocito.svg" class="imcell">
+					<p class="nn" id="nn5">0</p>
+				</div>
+				<div class="box" id="box6" onclick="touchSum6()" oncontextmenu="touchRes6()">
+					<p class="namecell" id="nc6">Monocyte</p>
+					<img src="data/res/monocito.svg" class="imcell">
+					<p class="nn" id="nn6">0</p>
+				</div>
+	
+				<div class="box" id="box1" onclick="touchSum1()" oncontextmenu="touchRes1()">
+					<p class="namecell" id="nc1">Nucleated</p>
+					<img src="data/res/nucleada.svg" class="imcell">
+					<p class="nn" id="nn1">0</p>
+				</div>
+				<div class="box" id="box2" onclick="touchSum2()" oncontextmenu="touchRes2()">
+					<p class="namecell" id="nc2">Other 1</p>
+					<img src="data/res/otro1.svg" class="imcell">
+					<p class="nn" id="nn2">0</p>
+				</div>
+				<div class="box" id="box3" onclick="touchSum3()" oncontextmenu="touchRes3()">
+					<p class="namecell" id="nc3">Other 2</p>
+					<img src="data/res/otro2.svg" class="imcell">
+					<p class="nn" id="nn3">0</p>
+				</div>
+				<div class="dv-help" id="dv-help"><p class="fuhelp" id="fuhelp">Press to increase number of cells (+1)<br>
+					Hold down to decrease number of cells (-1)</p></div>
+			</div>
+		</div>
+
+		<div class="setts" id="setts">
+			<p class="title" id="ttt-setts">Settings</p>
+			<p class="textapp" id="ttx-colormode">Color mode:</p>
+			<div><input type="radio" class="irad" id="rd-light" name="modecolor" value="light" onclick="changeColor(this)" data-ccolor="#e0e0e0" data-ccolor2="#d0d0d0" data-ctext="#505050" data-cshadow="5px 5px 10px #cacaca, -5px -5px 10px #f6f6f6" data-mcolor="a" checked><label class="ilab" for="light" id="ttx-lab1">Light</label></div>
+			<div><input type="radio" class="irad" id="rd-dark" name="modecolor" value="dark" onclick="changeColor(this)" data-ccolor="#303234" data-ccolor2="#202224" data-ctext="#e0e0e0" data-cshadow="5px 5px 10px #182022, -5px -5px 10px #434547" data-mcolor="b"><label class="ilab" for="dark" id="ttx-lab2">Dark</label></div>
+			<div><input type="radio" class="irad" id="rd-colorful" name="modecolor" value="colorful" onclick="changeCustomColor()"><label class="ilab" for="colorful" id="ttx-lab3">Custom</label></div>
+			<select class="lista" id="list-colors" onChange="applyColor()">
+				<option value="blue" class="li-op" id="r-blue" data-ccolor="#bad5f0" data-ccolor2="#aac5e0" data-ctext="#505050" data-cshadow="5px 5px 10px #a0b6d5, -5px -5px 10px #d0efff" data-mcolor="d" selected>Blue</option>
+				<option value="green" class="li-op" id="r-green" data-ccolor="#c2d5a8" data-ccolor2="#b2c598" data-ctext="#505050" data-cshadow="5px 5px 10px #aab081, -5px -5px 10px #d8eabc" data-mcolor="i">Green</option>
+				<option value="orange" class="li-op" id="r-orange" data-ccolor="#f6d2ae" data-ccolor2="#e6c29e" data-ctext="#505050" data-cshadow="5px 5px 10px #d0b888, -5px -5px 10px #ffeac5" data-mcolor="g">Orange</option>
+				<option value="pink" class="li-op" id="r-pink" data-ccolor="#dbc4df" data-ccolor2="#cbb4cf" data-ctext="#505050" data-cshadow="5px 5px 10px #c0a2bc, -5px -5px 10px #efd8f0" data-mcolor="c">Pink</option>
+				<option value="purple" class="li-op" id="r-purple" data-ccolor="#b0abcb" data-ccolor2="#a09bbb" data-ctext="#505050" data-cshadow="5px 5px 10px #9588a7, -5px -5px 10px #c6bfe1" data-mcolor="e">Purple</option>
+				<option value="red" class="li-op" id="r-red" data-ccolor="#fd8587" data-ccolor2="#ed7577" data-ctext="#505050" data-cshadow="5px 5px 10px #d86062, -5px -5px 10px #ffa0a2" data-mcolor="h">Red</option>
+				<option value="yellow" class="li-op" id="r-yellow" data-ccolor="#faefc4" data-ccolor2="#eadfb4" data-ctext="#505050" data-cshadow="5px 5px 10px #d5c9ae, -5px -5px 10px #ffffea" data-mcolor="f">Yellow</option>
+			</select>
+			<br><br>
+			<p class="textapp" id="ttx-zoom">Element size:</p>
+			<input type="range" class="iran" id="iran" min="0.9" max="1.1" value="1" step="0.1" onChange="changeZoom()">
+			<br><br>
+			<p class="textapp" id="ttx-restore">Default settings:</p>
+			<button class="bt" id="bt-restore" onclick="restore()"> Restore</button>
+			<br><br><br><br>
+		</div>
+
+		<div class="about" id="about">
+			<p class="title" id="ttt-about">About this app</p>
+			<img src="data/res/icon.png" class="sin-icon" id="sin-icon">
+			<p class="textapp-center" id="txx-info"><b>Cell Counter</b><br>
+				v2.1<br>MSM-DEV<br><br>
+				<small class="smalltext">DEVELOPER</small><br>Manuel Serrano Martínez<br><br>
+				<small class="smalltext">ICON FONT DESIGNER</small><br>Dave Gandy<br><br>
+			    <small class="smalltext" id="stars1"></small>
+				<small class="smalltext" id="stars2"></small>
+				<small class="smalltext" id="stars3"></small>
+				<small class="smalltext" id="stars4"></small>
+				<small class="smalltext" id="stars5"></small></p>
+				<center><button class="bt" id="goo-app" onclick="googleApp()"> Rate on Google Play</button></center>
+			<br><br><br><br>
+		</div>
+
+		<div class="calc" id="calc">
+			<p class="title" id="ttt-calc">Cell count</p>
+			<center>
+				<table class="table" id="tablecont">
+					<tr class="trblack">
+						<td id="td-f1"><b>Cell</b></td>
+						<td id="td-f2"><b>#</b></td>
+						<td id="td-f3"><b>%</b></td>
+					</tr>
+					<tr>
+						<td id="td-f4"><img src="data/res/basofilo.svg" class="imtcell"><br><small>Basophils</small></td>
+						<td id="nbas">0</td>
+						<td id="perbas">0</td>
+					</tr>
+					<tr class="trgray">
+						<td id="td-f5"><img src="data/res/eosinofilo.svg" class="imtcell"><br><small>Eosinophils</small></td>
+						<td id="neos">0</td>
+						<td id="pereos">0</td>
+					</tr>
+					<tr>
+						<td id="td-f6"><img src="data/res/banda.svg" class="imtcell"><br><small>Banded</small></td>
+						<td id="nban">0</td>
+						<td id="perban">0</td>
+					</tr>
+					<tr class="trgray">
+						<td id="td-f7"><img src="data/res/segmentado.svg" class="imtcell"><br><small>Segmented</small></td>
+						<td id="nseg">0</td>
+						<td id="perseg">0</td>
+					</tr>
+					<tr>
+						<td id="td-f8"><img src="data/res/linfocito.svg" class="imtcell"><br><small>Lymphocytes</small></td>
+						<td id="nlin">0</td>
+						<td id="perlin">0</td>
+					</tr>
+					<tr class="trgray">
+						<td id="td-f9"><img src="data/res/monocito.svg" class="imtcell"><br><small>Monocytes</small></td>
+						<td id="nmon">0</td>
+						<td id="permon">0</td>
+					</tr>
+					<tr>
+						<td id="td-f10"><img src="data/res/nucleada.svg" class="imtcell"><br><small>Nucleated</small></td>
+						<td id="neri">0</td>
+						<td id="pereri">0</td>
+					</tr>
+					<tr class="trgray">
+						<td id="td-f11"><img src="data/res/otro1.svg" class="imtcell"><br><small>Other 1</small></td>
+						<td id="not1">0</td>
+						<td id="perot1">0</td>
+					</tr>
+					<tr>
+						<td id="td-f12"><img src="data/res/otro2.svg" class="imtcell"><br><small>Other 2</small></td>
+						<td id="not2">0</td>
+						<td id="perot2">0</td>
+					</tr>
+					<tr class="trblack">
+						<td id="td-f13"><b>Total</b></td>
+						<td><b id="ntotal">0</b></td>
+						<td><b id="pertotal">0</b></td>
+					</tr>
+				</table><br><br><br><br>
+			</center>
+		</div>
+	</section>
+
+	<section class="alerta" id="alerta">
+		<p class="txal" id="txal">A total of 100 cells have been counted. Do you want to continue counting or end the count?</p>
+		<button class="bt" id="bt3" onclick="hideAlert()">Keep counting</button>
+		<button class="bt" id="bt4" onclick="calc()">End count</button>
+	</section>
+	<section class="fade" id="fade" onclick="hideMenu()"></section>
+
+	<section class="menu" id="menu">
+		<div class="item-menu" id="itemm6" onclick="goHome()"><p class="itx-menu" id="icm6"> Keep counting</p></div>
+		<div class="item-menu" id="itemm1" onclick="calc()"><p class="itx-menu" id="icm1"> Go to results</p></div>
+		<div class="item-menu" id="itemm2" onclick="saveRes()"><p class="itx-menu" id="icm2"> Export to HTML (beta)</p></div>
+		<div class="item-menu" id="itemm3" onclick="setts()"><p class="itx-menu" id="icm3"> Settings</p></div>
+		<div class="item-menu" id="itemm4" onclick="help()"><p class="itx-menu" id="icm4"> Help</p></div>
+		<div class="item-menu" id="itemm5" onclick="about()"><p class="itx-menu" id="icm5"> About this app</p></div>
+	</section>
+
+	<audio id="audio-u" class="audio">
+		<source src="data/res/u.wav">
+	</audio>
+	<audio id="audio-m" class="audio">
+		<source src="data/res/m.wav">
+	</audio>
+	<audio id="audio-h" class="audio">
+		<source src="data/res/h.wav">
+	</audio>
+	<audio id="audio-alert" class="audio">
+		<source src="data/res/alert.wav">
+	</audio>
+	<audio id="audio-l" class="audio">
+		<source src="data/res/l.wav">
+	</audio>
+
+	<p class="ind" id="ind">A</p>
+	<p class="ind" id="ind2">#d0d0d0</p>
+	<p class="ind" id="ind3">#505050</p>
+	<p class="ind" id="ind4">5px 5px 10px #cacaca, -5px -5px 10px #f6f6f6</p>
+	<p class="ind" id="ind5">A</p>
+	<script>
+		setInterval(setSize, 500);
+	</script>
+
+</body>
+
+</html>
